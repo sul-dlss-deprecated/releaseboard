@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <ul class="breadcrumbs">
+      <li class="current"><%= link_to 'Projects', projects_path %></li>
+    </ul>
+    <div class="twelve columns centered">
+      <h2>DLSS Project Release Board</h2>
+      <div class="tableish">
+      <div class="header row">
+        <div class="two columns">Project</div>
+        <div class="one columns">Type</div>
+        <div class="three columns">Development</div>
+        <div class="three columns">Test</div>
+        <div class="three columns">Production</div>
+      </div>
+      <div>
+      <% @projects.sort_by(&:name).each do |project| %>
+        <div class="body row">
+          <div class="two columns"><%= link_to project, project_path(project.name) %></div>
+          <div class="one columns"><%= project.kind %></div>
+          <% releases = project.latest_releases %>
+          <% ['development','test','production'].each do |env| %>
+            <div class="three columns">
+              <%= render_release_version releases, env %>
+              <%= render_release_date releases, env %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

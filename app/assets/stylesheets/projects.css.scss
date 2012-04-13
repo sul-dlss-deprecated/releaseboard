@@ -1,0 +1,25 @@
+// Place all the styles related to the releases controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.tableish{
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #DDD;
+  overflow: hidden;
+  
+  div.row{
+    padding: 3px;
+    &.header{
+      background-color: whiteSmoke;
+      font-weight: bold;
+    }
+  
+    &.body:nth-child(even){
+      background-color: #F9F9F9;
+    }
+  }
+}
+
+pre.notes{
+  font-family: consolas, monospace
+}

@@ -1,0 +1,15 @@
+<div class="tableish">
+  <div class="header row">
+    <div class="one columns">Version</div>
+    <div class="four columns">Released</div>
+    <div class="seven columns">Notes</div>
+  </div>
+  <% releases.each do |release| %>
+  <% href = project_release_path(release.project.name, release) %>
+  <div class="body row">
+    <div class="one column"><%= link_to content_tag(:span, release.version, {:class => 'white radius label'}), href %></div>
+    <div class="four columns"><%= link_to format_time(release.released_at, false), href %> (<%= time_ago_in_words release.released_at %> ago)</div>
+    <div class="seven columns"><%= render_release_note(release) %></div>
+  </div>
+  <% end %>
+</div>

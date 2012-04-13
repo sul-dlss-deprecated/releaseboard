@@ -1,15 +1,20 @@
 <div class="container">
-  <div class="ten columns centered">
-    <h1><%= @release.project.name %></h1>
-    <p>Version <span class="white radius label"><%= @release.version %></span> released to <span class="white radius label"><%= @release.environment.name %></span> <%= time_ago_in_words @release.released_at %> ago (<%= format_time(@release.released_at,false) %>)</p>
+  <div class="row">
+    <ul class="breadcrumbs">
+      <li><%= link_to 'Projects', projects_path %></li>
+      <li><%= link_to @release.project.name, project_path(@release.project.name) %></li>
+      <li class="current"><%= content_tag :span, @release.version %></li>
+    </ul>
+    <div class="twelve columns centered">
+      <h2><%= @release.project.name %></h2>
+      <p>Version <span class="white radius label"><%= @release.version %></span> released to <span class="white radius label"><%= @release.environment.name %></span> <%= time_ago_in_words @release.released_at %> ago (<%= format_time(@release.released_at,false) %>)</p>
 
-    <% if @release.release_notes.present? %>
-      <h3>Release Notes</h3>
-      <div class="panel">
-        <div class="markdown">
-          <%= RDiscount.new(@release.release_notes.to_s).to_html.html_safe %>
+      <% if @release.release_notes.present? %>
+        <h3>Release Notes</h3>
+        <div class="panel">
+          <%= content_tag :pre, @release.release_notes.to_s, :class => 'notes' %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -1,11 +1,10 @@
 Releaseboard::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
-
-  resources :releases do
-    member do
-      get 'notes'
-    end
+  root :to => 'projects#index'
+  
+  resources :projects do
+    resources :releases
   end
   
   # Sample of regular route:
