@@ -4,6 +4,8 @@ require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
 
+set :stages, %W(dev prod)
+set :default_stage, "prod"
 set :bundle_flags, "--quiet"
 set :rvm_ruby_string, "1.8.7@releaseboard"
 set :rvm_type, :system
@@ -22,7 +24,7 @@ set :destination, "/var/opt/home/lyberadmin"
 set :application, "releaseboard"
 
 set :scm, :git
-set :deploy_via, :copy # I got 99 problems, but AFS ain't one
+set :deploy_via, :remote_cache
 set :copy_cache, true
 set :copy_exclude, [".git"]
 set :use_sudo, false
