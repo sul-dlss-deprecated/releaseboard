@@ -1,5 +1,14 @@
 module ProjectsHelper
 
+  def render_project_detail label, value
+    if value.present?
+      content_tag :div, :class => 'row' do
+        content_tag(:div, :class => 'one columns') { label } +
+        content_tag(:div, :class => 'eleven columns') { value }
+      end
+    end
+  end
+  
   def find_upstream_release releases, environment
     release = releases[environment]
     previous_environment = release.environment.previous

@@ -4,25 +4,41 @@
     <ul class="breadcrumbs">
       <li><%= link_to 'Projects', projects_path %></li>
       <li class="current"><%= content_tag :span, @project.name %></li>
+      <li><%= link_to 'Edit', edit_project_path(@project) %></li>
     </ul>
     <div class="twelve columns centered">
       <h2><%= @project.name %></h2>
+      <% if @project.description.present? %>
+        <p><%= @project.description %></p>
+      <% end %>
+      <div class="row">
+        <%= render_project_detail 'Maintainer', @project.maintainer %>
+        <%= render_project_detail 'Contact', @project.email %>
+        <%= render_project_detail 'Source', @project.source %>
+      </div>
+      <hr/>
+      <h4>Release History</h4>
+      <% if environments.any? %>
+        <div class="row">
+          <dl class="tabbish sub-nav">
+            <dt>Environment:</dt>
+            <% environments.each_with_index do |env,index| %>
+            <%= content_tag :dd, :class => (index == 0 ? 'active' : '') do %>
+            <%= link_to env.name.titleize, "##{env.name}Releases" %>
+            <% end %>
+            <% end %>
+          </dl>
+          <ul class="tabs-content">
+            <% environments.each_with_index do |env,index| %>
+            <%= content_tag(:li, :id => "#{env.name}Releases", :class => index == 0 ? 'active' : '') do %>
+              <%= render_releases_for @project, env %>
+            <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% else %>
+        <p>This project has not logged any releases.</p>
+      <% end %>
     </div>
-    <dl class="tabbish sub-nav">
-      <dt>Environment:</dt>
-      <% environments.each_with_index do |env,index| %>
-      <%= content_tag :dd, :class => (index == 0 ? 'active' : '') do %>
-      <%= link_to env.name.titleize, "##{env.name}Releases" %>
-      <% end %>
-      <% end %>
-    </dl>
-    <ul class="tabs-content">
-      <% environments.each_with_index do |env,index| %>
-      <%= content_tag(:li, :id => "#{env.name}Releases", :class => index == 0 ? 'active' : '') do %>
-        <h5><%= env.name.titleize %> Releases</h5>
-        <%= render_releases_for @project, env %>
-      <% end %>
-      <% end %>
-    </ul>
   </div>
 </div>

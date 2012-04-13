@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, :notice => 'Project was successfully created.' }
+        format.html { redirect_to projects_path, :notice => 'Project was successfully created.' }
         format.json { render :json => @project, :status => :created, :location => @project }
       else
         format.html { render :action => "new" }
@@ -81,6 +81,12 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def echo
+    respond_to do |format|
+      format.json { render :json => params }
+    end
+  end
+  
   def resolve_params
     resolve_id_field(:id, Project)
     resolve_id_field(:environment_id, Environment, :project)

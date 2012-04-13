@@ -3,8 +3,10 @@ Releaseboard::Application.routes.draw do
   # first created -> highest priority.
   root :to => 'projects#index'
   
-  resources :projects do
-    resources :releases
+  match '/echo' => 'projects#echo', :as => :echo
+  
+  resources :projects, :except do
+    resources :releases, :except => [:new, :edit]
   end
   
   # Sample of regular route:

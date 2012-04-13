@@ -1,17 +1,17 @@
 <%= form_for(@project) do |f| %>
-  <% if @project.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
-
-      <ul>
-      <% @project.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+  <div class="row">
+  <div class="four columns" id="text_fields">
+    <%= render_text_field f, :name, 'Project name' %>
+    <%= render_text_field f, :kind, 'Kind (webapp, gem, etc.)' %>
+    <%= render_text_field f, :maintainer, 'Primary contact' %>
+    <%= render_text_field f, :email, 'Contact email' %>
+    <%= render_text_field f, :source, 'Source code repository location' %>
+  </div>
+  <div class="six columns">
+    <%= render_text_area f, :description, 'Description', :style => 'height: 232px' %>
+  </div>
+  </div>
+  <div class="row">
+  <%= f.submit nil, :class => 'button' %>
   </div>
 <% end %>

@@ -12,6 +12,7 @@
       <% if @release.release_notes.present? %>
         <h3>Release Notes</h3>
         <div class="panel">
+          <%= render_release_notes(release) %>
           <%= content_tag :pre, @release.release_notes.to_s, :class => 'notes' %>
         </div>
       <% end %>

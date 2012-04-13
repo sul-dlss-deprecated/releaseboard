@@ -9,3 +9,5 @@ $ ->
     $(this.hash).addClass('active')
     $(this).parent().addClass('active')
     true
+    
+  $('#project_description').height($('#text_fields').height()-27)

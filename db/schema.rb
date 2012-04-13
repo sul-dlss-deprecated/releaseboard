@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413015849) do
+ActiveRecord::Schema.define(:version => 20120413215554) do
 
   create_table "environments", :force => true do |t|
     t.string   "name"
@@ -23,9 +23,11 @@ ActiveRecord::Schema.define(:version => 20120413015849) do
     t.string   "name"
     t.string   "maintainer"
     t.string   "email"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "kind"
+    t.text     "description"
+    t.string   "source"
   end
 
   create_table "releases", :force => true do |t|

@@ -1,5 +1,11 @@
-<h1>New release</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', releases_path %>
+<div class="container">
+  <div class="row">
+    <ul class="breadcrumbs">
+      <li><%= link_to 'Projects', projects_path %></li>
+      <li class="current">New Project></li>
+    </ul>
+    <div class="twelve columns centered">
+    <%= render 'form' %>
+    </div>
+  </div>
+</div>
