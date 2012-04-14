@@ -54,25 +54,23 @@ module ProjectsHelper
     end
   end
   
+  def get_release_color release, previous
+    colors = ['red','blue','green','white']
+    if previous.nil?
+      colors.last
+    else
+      index = release.diff(previous.version)
+      index.present? ? colors[index] : colors.last
+    end
+  end
+  
   def render_release_version releases, environment
     release = releases[environment]
     if release.nil?
       '—'
     else
       previous = find_upstream_release(releases, environment)
-      color = 'white'
-      unless previous.nil?
-        cv = release.version.split(/\./)
-        nv = previous.version.split(/\./)
-        diff = nil
-        cv.each_with_index { |v,i| if v < nv[i]; diff = i; break; end }
-      
-        case diff
-        when 0 then color = 'red'
-        when 1 then color = 'blue'
-        else        color = 'white'
-        end
-      end
+      color = previous.nil? ? 'white' : get_release_color(release, previous)
       link_to content_tag(:span, {:class => "#{color} radius label"}) { release.version }, project_release_path(release.project.name, release)
     end
   end

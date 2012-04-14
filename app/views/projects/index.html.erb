@@ -5,7 +5,17 @@
       <li><%= link_to 'Register New Project', new_project_path %></li>
     </ul>
     <div class="twelve columns centered">
-      <h2>DLSS Project Release Board</h2>
+      <div class="row">
+        <div class="twelve columns">
+          <div style="float:right; padding-top: 22px">
+            <span class="white radius label">Current</span>
+            <span class="green radius label">Pending Patch</span>
+            <span class="blue  radius label">Pending Minor</span>
+            <span class="red   radius label">Pending Major</span>
+          </div>
+          <h2>DLSS Project Release Board</h2>
+        </div>
+      </div class="row">
       <div class="tableish">
       <div class="header row">
         <div class="two columns">Project</div>
