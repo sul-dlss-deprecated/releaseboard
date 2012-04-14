@@ -10,4 +10,6 @@ $ ->
     $(this).parent().addClass('active')
     true
     
-  $('#project_description').height($('#text_fields').height()-27)
+  d = $('#project_description')
+  d.height($('#text_fields').height()-27)
+  d.width(d.parent().width())
