@@ -3,7 +3,6 @@ class Project < ActiveRecord::Base
   has_many :releases, :dependent => :delete_all
   has_many :environments, :through => :releases
   validates :name, :presence => true, :uniqueness => true, :length => { :maximum => 20 }
-  validates :kind, :presence => true
   
   def to_s; name; end
   
