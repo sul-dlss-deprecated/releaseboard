@@ -1,9 +1,9 @@
 <div class="container">
   <div class="row">
-    <ul class="breadcrumbs">
+    <%= render :layout => 'breadcrumbs' do %>
       <li><%= link_to 'Projects', projects_path %></li>
       <li class="current"><%= link_to 'Register New Project', new_project_path %></li>
-    </ul>
+    <% end %>
     <div class="twelve columns centered">
       <%= render 'form' %>
     </div>

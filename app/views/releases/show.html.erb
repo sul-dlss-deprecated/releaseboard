@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <ul class="breadcrumbs">
+    <%= render :layout => 'breadcrumbs' do %>
       <li><%= link_to 'Projects', projects_path %></li>
       <li><%= link_to @release.project.name, project_path(@release.project.name) %></li>
-      <li class="current"><%= content_tag :span, @release.version %></li>
-    </ul>
+      <li class="current"><%= content_tag :span, "#{@release.version}-#{@release.environment.name}" %></li>
+    <% end %>
     <div class="twelve columns centered">
       <h2><%= @release.project.name %></h2>
       <p>Version <span class="white radius label"><%= @release.version %></span> released to <span class="white radius label"><%= @release.environment.name %></span> <%= time_ago_in_words @release.released_at %> ago (<%= format_time(@release.released_at,false) %>)</p>

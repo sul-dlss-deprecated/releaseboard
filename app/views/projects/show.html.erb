@@ -1,11 +1,13 @@
 <% environments = @project.environments.uniq %>
 <div class="container">
   <div class="row">
-    <ul class="breadcrumbs">
-      <li><%= link_to 'Projects', projects_path %></li>
-      <li class="current"><%= content_tag :span, @project.name %></li>
-      <li><%= link_to 'Edit', edit_project_path(@project) %></li>
-    </ul>
+    <div class="row">
+      <%= render :layout => 'breadcrumbs' do %>
+        <li><%= link_to 'Projects', projects_path %></li>
+        <li class="current"><%= content_tag :span, @project.name %></li>
+        <li><%= link_to 'Edit', edit_project_path(@project) %></li>
+      <% end %>
+    </div>
     <div class="twelve columns centered">
       <h2><%= @project.name %></h2>
       <% if @project.description.present? %>
