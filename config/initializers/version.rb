@@ -1,1 +1,3 @@
-Releaseboard::VERSION = '0.8.0'
+module Releaseboard
+  VERSION = '0.8.0'
+end
