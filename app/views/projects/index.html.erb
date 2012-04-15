@@ -1,11 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="row">
-      <%= render :layout => 'breadcrumbs' do %>
-        <li class="current"><%= link_to 'Projects', projects_path %></li>
-        <li><%= link_to 'Register New Project', new_project_path %></li>
-      <% end %>
-    </div>
+    <%= breadcrumbs %>
     <div class="twelve columns centered">
       <div class="row">
         <div class="twelve columns">
@@ -29,13 +24,12 @@
       <div>
       <% @projects.sort_by(&:name).each do |project| %>
         <div class="body row">
-          <div class="two columns"><%= link_to project, project_path(project.name), :style => 'white-space: nowrap' %></div>
+          <div class="two columns"><%= link_to project.name, project_path(project.name), :style => 'white-space: nowrap' %></div>
           <div class="one columns"><%= project.kind %></div>
           <% releases = project.latest_releases %>
           <% ['development','test','production'].each do |env| %>
             <div class="three columns">
-              <%= render_release_version releases, env %>
-              <%= render_release_date releases, env %>
+              <%= release_info(releases, env) %>
             </div>
           <% end %>
         </div>

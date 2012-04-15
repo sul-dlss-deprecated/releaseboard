@@ -13,6 +13,7 @@ set :rvm_type, :system
 require 'capistrano/ext/multistage'
 
 after "deploy:symlink", "rvm:trust_rvmrc"
+after "deploy:restart", "dlss:log_release"
 
 set :shared_children, %w(log config/database.yml)
 

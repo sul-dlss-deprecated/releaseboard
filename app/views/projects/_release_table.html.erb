@@ -5,12 +5,10 @@
     <div class="seven columns">Notes</div>
   </div>
   <% releases.each_with_index do |release,index| %>
-  <% href = project_release_path(release.project.name, release) %>
-  <% tag_color = get_release_color(release, releases[index+1]) %>
-  <div class="body row">
-    <div class="one column"><%= link_to content_tag(:span, release.version, {:class => "#{tag_color} radius label"}), href %></div>
-    <div class="four columns"><%= link_to format_time(release.released_at, false), href %> (<%= time_ago_in_words release.released_at %> ago)</div>
-    <div class="seven columns"><%= render_release_note(release) %></div>
-  </div>
+    <div class="body row">
+      <div class="one column"><%= release.version_label(releases[index+1]) %></div>
+      <div class="four columns"><%= release.released_at(:words => true) %></div>
+      <div class="seven columns"><%= release.short_note %></div>
+    </div>
   <% end %>
 </div>

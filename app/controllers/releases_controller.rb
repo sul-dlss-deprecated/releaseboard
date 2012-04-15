@@ -1,40 +1,13 @@
 class ReleasesController < ApplicationController
-  # GET /projects/:project_id/releases
-  # GET /projects/:project_id/releases.json
-  def index
-    @releases = Release.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @releases }
-    end
-  end
-
   # GET /projects/:project_id/releases/1
   # GET /projects/:project_id/releases/1.json
   def show
-    @release = Release.find(params[:id])
+    @release = ReleaseDecorator.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render :json => @release }
     end
-  end
-
-  # GET /projects/:project_id/releases/new
-  # GET /projects/:project_id/releases/new.json
-  def new
-    @release = Release.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @release }
-    end
-  end
-
-  # GET /projects/:project_id/releases/1/edit
-  def edit
-    @release = Release.find(params[:id])
   end
 
   # POST /projects/:project_id/releases

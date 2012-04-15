@@ -4,9 +4,10 @@ Releaseboard::Application.routes.draw do
   root :to => 'projects#index'
   
 #  match '/echo' => 'projects#echo', :as => :echo
+  match '/projects/:id/releases' => 'projects#show'
   
   resources :projects, :except do
-    resources :releases, :except => [:new, :edit]
+    resources :releases, :except => [:index, :new, :edit]
   end
   
   # Sample of regular route:

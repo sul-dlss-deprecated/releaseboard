@@ -13,7 +13,7 @@ gem 'jquery-rails'
 gem 'therubyracer'
 
 gem 'zurb-foundation'
-gem 'rdiscount'
+gem 'draper'
 
 group :development do
   gem 'pry'
