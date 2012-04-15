@@ -4,6 +4,10 @@ class ReleaseDecorator < ApplicationDecorator
   decorates :release
   decorates_association :project
 
+  def self.latest *args
+    self.decorate(self.model_class.latest *args)
+  end
+  
   def version_label previous
     colors = ['red','blue','green','white']
     color = colors.last

@@ -5,7 +5,7 @@ class ProjectDecorator < ApplicationDecorator
   decorates_association :releases
   
   def latest_releases
-    Hash[model.latest_releases.collect { |k,v| [k,ReleaseDecorator.new(v)] }]
+    ReleaseDecorator.decorate(model.latest_releases).to_ary.also_index_by(:environment_name)
   end
   
   def maintainer

@@ -1,15 +1,11 @@
 class Project < ActiveRecord::Base
   attr_accessible :name, :kind, :description, :maintainer, :email, :source
   has_many :releases, :dependent => :delete_all
-  has_many :environments, :through => :releases
+  has_many :environments, :through => :releases, :select => 'distinct environments.*'
   validates :name, :presence => true, :uniqueness => true, :length => { :maximum => 20 }
   
-  def to_s; name; end
-  
   def latest_releases
-    result = self.releases.group_by { |r| r.environment.name }
-    result.keys.each { |k| result[k] = result[k].sort_by(&:released_at).last }
-    result
+    releases.latest.also_index_by(:environment_name)
   end
 
   def ensure_referent_id(thing, class_of_thing)
