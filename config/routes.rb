@@ -4,7 +4,7 @@ Releaseboard::Application.routes.draw do
   root :to => 'projects#index'
   
 #  match '/echo' => 'projects#echo', :as => :echo
-  match '/projects/:id/releases' => 'projects#show'
+  match '/projects/:id/releases' => 'projects#show', :via => :get
   
   resources :projects do
     resources :releases, :except => [:index, :new, :edit]
