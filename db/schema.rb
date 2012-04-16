@@ -10,13 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413215554) do
+ActiveRecord::Schema.define(:version => 20120416155459) do
 
   create_table "environments", :force => true do |t|
     t.string   "name"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
     t.integer  "previous_environment_id"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "environment_id"
+    t.string   "from"
+    t.string   "to"
+    t.string   "subject"
+    t.text     "template"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "projects", :force => true do |t|

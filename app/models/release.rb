@@ -12,6 +12,8 @@ class Release < ActiveRecord::Base
   before_validation(:on => :create) do
     self.released_at ||= Time.now
   end
+
+  after_create :send_announcements
   
   def diff version
     cv = self.version.split(/\./)
@@ -23,6 +25,12 @@ class Release < ActiveRecord::Base
   
   def environment_name
     environment.name
+  end
+  
+  def send_announcements
+    self.project.notifications.where(:environment_id => self.environment.id).each do |notification|
+      Announcement.notify(self, notification).deliver
+    end
   end
   
 end

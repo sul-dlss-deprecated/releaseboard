@@ -15,7 +15,7 @@ require 'capistrano/ext/multistage'
 after "deploy:symlink", "rvm:trust_rvmrc"
 after "deploy:restart", "dlss:log_release"
 
-set :shared_children, %w(log config/database.yml)
+set :shared_children, %w(log config/database.yml config/notification.yml)
 
 set :user, "lyberadmin" 
 set :runner, "lyberadmin"

@@ -5,4 +5,32 @@
       <%= render 'form' %>
     </div>
   </div>
+  <div class="row">
+    <div class="twelve columns">
+      <hr/>
+      <h4>Notifications</h4>
+    </div>
+    <div class="tableish">
+      <div class="header row">
+        <div class="one column"></div>
+        <div class="three columns">Environment</div>
+        <div class="four columns">From</div>
+        <div class="four columns">To</div>
+      </div>
+      <div id="notifications_table">
+      <% @project.notifications.each do |notification| %>
+        <%= render :template => 'notifications/show', :locals => { :notification => notification }, :layout => nil %>
+      <% end %>
+      </div>
+      <div class="body row" id="new_notification_button">
+        <div class="one column">
+          <%= link_to image_tag("icons/add.png"), new_project_notification_path(@project), :class => 'notification-create' %>
+        </div>
+        <div class="eleven columns"></div>
+      </div>
+      <div class="body row" id="new_notification_form" style="display: none;">
+        <%= render :partial => 'notifications/form', :locals => { :notification => Notification.new(:project_id => @project.id) } %>
+      </div>
+    </div>
+  </div>
 </div>

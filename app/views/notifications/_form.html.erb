@@ -1,0 +1,24 @@
+<% @notification ||= notification %>
+<% Rails.logger.info "NOTIFICATION: #{@notification.inspect}" %>
+<div class="body row notification-container" id="notification-<%= @notification.id %>"  data-notification-id="<%= @notification.id %>"  data-project-id="<%= @notification.project.id %>">
+<%= form_for(@notification) do |f| %>
+  <div class="row">
+    <div class="four columns" id="text_fields">
+      <%= f.hidden_field :project_id %>
+      <%= f.label :environment_id, 'Environment' %>
+      <%= f.select :environment_id, options_from_collection_for_select(Environment.all, "id", "name", @notification.environment_id) %>
+      <%= render_text_field f, :from, 'From' %>
+      <%= render_text_field f, :to, 'To' %>
+      <%= render_text_field f, :subject, 'Subject template' %>
+    </div>
+    <div class="six columns">
+      <%= render_text_area f, :template, 'Body template', :style => 'height: 232px' %>
+    </div>
+    </div>
+    <div class="row">
+      <%= f.submit @notification.new_record? ? 'Create' : 'Update', :class => 'button' %>
+      <%= hidden_field_tag :cancel, '' %>
+      <%= f.submit 'Cancel', :class => 'cancel button', :name => 'notification[cancel]' %>
+  </div>
+<% end %>
+</div>
