@@ -5,8 +5,11 @@ class Release < ActiveRecord::Base
   validates :project, :presence => true
   validates :environment, :presence => true
   scope :latest, lambda {
-    select_list = (attribute_names-['released_at']).join(', ')
-    select("#{select_list}, MAX(released_at) as released_at").group(:project_id, :environment_id)
+    # DANGER: Selecting on MAX(id) isn't a great way to do this, but I can't
+    # figure out how to select the ID of the row with MAX(released_id) without
+    # a complicated self-join. This way will *almost* always work.
+    rt = self.arel_table
+    where(:id => rt.project(rt[:id].maximum).group(rt[:project_id], rt[:environment_id]))
   }
   
   before_validation(:on => :create) do
