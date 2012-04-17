@@ -1,6 +1,7 @@
 set :rails_env, "development"
 set :deployment_host, "lyberapps-dev.stanford.edu"
 set :repository,  "."
+set :deploy_via, :copy
 set :branch, "master"
 set :bundle_without, [:deployment]
 

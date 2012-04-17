@@ -4,7 +4,7 @@ require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
 
-set :stages, %W(dev prod)
+set :stages, %W(dev testing prod)
 set :default_stage, "prod"
 set :bundle_flags, "--quiet"
 set :rvm_ruby_string, "1.8.7@releaseboard"
@@ -12,8 +12,7 @@ set :rvm_type, :system
 
 require 'capistrano/ext/multistage'
 
-after "deploy:symlink", "rvm:trust_rvmrc"
-after "deploy:restart", "dlss:log_release"
+after "deploy:assets:symlink", "rvm:trust_rvmrc"
 
 set :shared_children, %w(log config/database.yml config/notification.yml)
 
@@ -25,7 +24,6 @@ set :destination, "/var/opt/home/lyberadmin"
 set :application, "releaseboard"
 
 set :scm, :git
-set :deploy_via, :remote_cache
 set :copy_cache, true
 set :copy_exclude, [".git"]
 set :use_sudo, false

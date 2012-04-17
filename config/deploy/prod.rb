@@ -1,6 +1,7 @@
 set :rails_env, "production"
 set :deployment_host, "lyberapps-prod.stanford.edu"
 set :repository,  "git://github.com/sul-dlss/releaseboard.git"
+set :deploy_via, :remote_cache
 set :branch, "master"
 set :bundle_without, [:deployment,:development,:test]
 
