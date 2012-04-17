@@ -9,7 +9,8 @@ class ProjectDecorator < ApplicationDecorator
   end
   
   def maintainer
-    detail(model.maintainer, 'Maintainer')
+    display = model.email.present? ? link_to(model.maintainer, "mailto:#{model.email}") : model.maintainer
+    detail(display, 'Maintainer')
   end
   
   def email
@@ -18,6 +19,10 @@ class ProjectDecorator < ApplicationDecorator
   
   def source
     detail(model.source, 'Source')
+  end
+  
+  def notification_count
+    detail(model.notifications.length.to_s, 'Notifications')
   end
   
   def breadcrumb(current=false, action=:show)

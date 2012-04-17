@@ -23,3 +23,18 @@
 pre.notes{
   font-family: consolas, monospace
 }
+
+a.notification-link{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  &.create {background-image: url('/assets/icons/add.png');}
+  &.edit   {background-image: url('/assets/icons/edit.png');}
+  &.delete {background-image: url('/assets/icons/delete.png');}
+  &:hover{
+    &.create {background-image: url('/assets/icons/add.color.png');}
+    &.edit   {background-image: url('/assets/icons/edit.color.png');}
+    &.delete {background-image: url('/assets/icons/delete.color.png');}
+  }
+}

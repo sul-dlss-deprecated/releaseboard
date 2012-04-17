@@ -44,7 +44,7 @@ bindHandlers = (container) ->
     $('#new_notification_button').show();
     return false
     
-  $('a.notification-edit', container).click ->
+  $('a.edit.notification-link', container).click ->
     sender = $(this)
     [container, data] = getNotificationData(sender)
     $.ajax "/notifications/#{data.notificationId}/edit",
@@ -55,7 +55,7 @@ bindHandlers = (container) ->
         bindHandlers(newContainer)
     return false
   
-  $('a.notification-delete', container).click ->
+  $('a.delete.notification-link', container).click ->
     sender = $(this)
     [container, data] = getNotificationData(sender)
     $.ajax "/notifications/#{data.notificationId}.json",
@@ -63,7 +63,7 @@ bindHandlers = (container) ->
       dataType: 'json'
       success: (data, status, xhr) -> container.remove()
       
-  $('a.notification-create', container).click ->
+  $('a.create.notification-link', container).click ->
     $('#new_notification_button').hide();
     $('#new_notification_form').show();
     $('#new_notification_form form')[0].reset();
