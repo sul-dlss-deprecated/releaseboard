@@ -162,6 +162,7 @@ DEPENDENCIES
   pry
   pry-remote
   rails (= 3.2.3)
+  rake
   rvm-capistrano
   sass-rails (~> 3.2.3)
   therubyracer

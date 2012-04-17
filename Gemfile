@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 source "http://sulair-rails-dev.stanford.edu"
 
 gem 'rails', '3.2.3'
+gem 'rake'
 
 gem 'mysql2'
 gem 'json'
