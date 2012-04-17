@@ -29,12 +29,12 @@ a.notification-link{
   width: 16px;
   height: 16px;
   background-repeat: no-repeat;
-  &.create {background-image: url('/assets/icons/add.png');}
-  &.edit   {background-image: url('/assets/icons/edit.png');}
-  &.delete {background-image: url('/assets/icons/delete.png');}
+  &.create {background-image: image-url('icons/add.png');}
+  &.edit   {background-image: image-url('icons/edit.png');}
+  &.delete {background-image: image-url('icons/delete.png');}
   &:hover{
-    &.create {background-image: url('/assets/icons/add.color.png');}
-    &.edit   {background-image: url('/assets/icons/edit.color.png');}
-    &.delete {background-image: url('/assets/icons/delete.color.png');}
+    &.create {background-image: image-url('icons/add.color.png');}
+    &.edit   {background-image: image-url('icons/edit.color.png');}
+    &.delete {background-image: image-url('icons/delete.color.png');}
   }
 }
