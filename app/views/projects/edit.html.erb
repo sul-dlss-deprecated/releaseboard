@@ -28,7 +28,7 @@
         </div>
         <div class="eleven columns"></div>
       </div>
-      <div class="body row" id="new_notification_form" style="display: none;">
+      <div class="body row" id="new_notification_form" style="display: none;" data-project-id="<%= @project.id %>">
         <%= render :partial => 'notifications/form', :locals => { :notification => Notification.new(:project_id => @project.id) } %>
       </div>
     </div>

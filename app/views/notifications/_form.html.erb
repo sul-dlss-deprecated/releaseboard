@@ -1,6 +1,5 @@
 <% @notification ||= notification %>
-<% Rails.logger.info "NOTIFICATION: #{@notification.inspect}" %>
-<div class="body row notification-container" id="notification-<%= @notification.id %>"  data-notification-id="<%= @notification.id %>"  data-project-id="<%= @notification.project.id %>">
+<div class="body row notification-container" id="notification-<%= @notification.id %>"  data-notification-id="<%= @notification.id %>">
 <%= form_for(@notification) do |f| %>
   <div class="row">
     <div class="four columns" id="text_fields">

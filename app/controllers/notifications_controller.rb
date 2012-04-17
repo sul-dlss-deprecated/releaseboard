@@ -28,9 +28,8 @@ class NotificationsController < ApplicationController
   # GET /notifications/new.json
   def new
     @notification = Notification.new
-
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { request.xhr? ? render(:layout => nil) : render }
       format.json { render :json => @notification }
     end
   end
