@@ -9,9 +9,9 @@ class Notification < ActiveRecord::Base
   validates :from,        :presence => true
   validates :to,          :presence => true
   validates :subject,     :presence => true
+  validates :template,    :presence => true
 
   after_initialize :set_defaults
-  cattr_reader :defaults
 
   def subject_for(release)
     generate_content_for(self.subject, release.project.name, release.environment.name, release.version)
@@ -22,15 +22,9 @@ class Notification < ActiveRecord::Base
   end
   
   protected
-  def self.defaultable_attributes
-    self.accessible_attributes.select(&:present?)
-  end
-  @@defaults = OpenStruct.new Hash[self.defaultable_attributes.select(&:present?).collect { |n| [n,nil] }]
   
   def set_defaults
-    self.class.defaultable_attributes.each do |attrib|
-      self[attrib.to_sym] ||= self.defaults.send(attrib.to_sym)
-    end
+    NotificationDefaults.each_pair { |k,v| self[k] ||= v }
   end
 
   def generate_content_for(template, project, environment, version)
