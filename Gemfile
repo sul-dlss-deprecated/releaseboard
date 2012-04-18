@@ -16,6 +16,9 @@ gem 'therubyracer'
 gem 'zurb-foundation'
 gem 'draper'
 
+gem 'delayed_job_active_record'
+gem 'daemons'
+
 group :development do
   gem 'pry'
   gem 'pry-remote'

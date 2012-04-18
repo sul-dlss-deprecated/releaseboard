@@ -3,6 +3,7 @@ require 'net/ssh/kerberos'
 require 'bundler/setup'
 require 'bundler/capistrano'
 require 'dlss/capistrano'
+require 'delayed/recipes'
 
 set :stages, %W(dev testing prod)
 set :default_stage, "prod"
@@ -13,6 +14,10 @@ set :rvm_type, :system
 require 'capistrano/ext/multistage'
 
 after "deploy:assets:symlink", "rvm:trust_rvmrc"
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
+#after "deploy:restart", "dlss:log_release"
 
 set :shared_children, %w(log config/database.yml config/notification.yml)
 

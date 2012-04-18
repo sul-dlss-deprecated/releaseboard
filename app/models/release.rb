@@ -35,5 +35,6 @@ class Release < ActiveRecord::Base
       Announcement.notify(self, notification).deliver
     end
   end
+  handle_asynchronously :send_announcements
   
 end
