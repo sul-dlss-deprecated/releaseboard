@@ -8,6 +8,13 @@ getNotificationData = (sender) ->
 
 bindHandlers = (container) ->
   relative_root_url = $('body').data('root')
+
+  swapContent = (container, content, remove=true) -> 
+    newContainer = $(content).hide()
+    container.after(newContainer)
+    container.animate height: 0, opacity: 0, -> container.remove() if remove
+    newContainer.animate height: 'toggle', opacity: 1
+    bindHandlers(newContainer)
   
   $('form.edit_notification', container).submit ->
     sender = $(this)
@@ -15,10 +22,7 @@ bindHandlers = (container) ->
     $.ajax "#{relative_root_url}/notifications/#{data.notificationId}",
       type: 'PUT'
       data: sender.serialize()
-      complete: (data, status, xhr) -> 
-        newContainer = $(data.responseText)
-        container.replaceWith(newContainer)
-        bindHandlers(newContainer)
+      complete: (data, status, xhr) -> swapContent(container, data.responseText)
     return false
     
   $('form.new_notification', container).submit ->
@@ -30,13 +34,14 @@ bindHandlers = (container) ->
       type: 'POST'
       data: sender.serialize()
       complete: (data, status, xhr) -> 
-        newContainer = $(data.responseText)
-        if data.getResponseHeader('X-Valid-Model') == 'false'
-          container.replaceWith(newContainer)
-        else
+        if data.getResponseHeader('X-Valid-Model') == 'true'
+          bindHandlers(newContainer = $(data.responseText).hide())
           $('#notifications_table').append(newContainer)
-          $('.new_notification .cancel.button').trigger('click');
-        bindHandlers(newContainer)
+          newContainer.slideDown()
+          $('#new_notification_button').slideDown();
+          $('#new_notification_form').slideUp();
+        else
+          container.replaceWith(data.responseText)
     return false
   
   $('.edit_notification .cancel.button', container).click ->
@@ -44,25 +49,15 @@ bindHandlers = (container) ->
     return true
 
   $('.new_notification .cancel.button', container).click ->
-    projectId = $('#new_notification_form').data('projectId')
-    $('#new_notification_form').hide();
-    $('#new_notification_button').show();
-    $.ajax "#{relative_root_url}/projects/#{projectId}/notifications/new",
-      type: 'GET'
-      complete: (data, status, xhr) -> 
-        $('#new_notification_form').html(data.responseText)
-        bindHandlers($('#new_notification_form'))
+    $('#new_notification_form').slideUp()
+    $('#new_notification_button').slideDown();
     return false
     
   $('a.edit.notification-link', container).click ->
     sender = $(this)
     [container, data] = getNotificationData(sender)
     $.ajax "#{relative_root_url}/notifications/#{data.notificationId}/edit",
-      dataType: 'html',
-      success: (data, status, xhr) -> 
-        newContainer = $(data)
-        container.replaceWith(newContainer)
-        bindHandlers(newContainer)
+      success: (data, status, xhr) -> swapContent(container, data)
     return false
   
   $('a.delete.notification-link', container).click ->
@@ -70,13 +65,18 @@ bindHandlers = (container) ->
     [container, data] = getNotificationData(sender)
     $.ajax "#{relative_root_url}/notifications/#{data.notificationId}.json",
       type: 'DELETE'
-      dataType: 'json'
-      success: (data, status, xhr) -> container.remove()
+      success: (data, status, xhr) -> 
+        container.animate height: 0, opacity: 0, -> container.remove()
       
   $('a.create.notification-link', container).click ->
-    $('#new_notification_button').hide();
-    $('#new_notification_form').show();
-    $('#new_notification_form form')[0].reset();
+    form = $('#new_notification_form')
+    projectId = form.data('projectId')
+    $.ajax "#{relative_root_url}/projects/#{projectId}/notifications/new",
+      complete: (data, status, xhr) -> 
+        form.html(data.responseText)
+        bindHandlers(form)
+        $('#new_notification_button').slideUp();
+        form.slideDown();
     return false
     
 $ ->
