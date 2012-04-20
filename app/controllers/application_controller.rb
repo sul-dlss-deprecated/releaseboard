@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :resolve_params
+  before_filter :authenticate_cud_requests, :except => [:index, :show]
+  cattr_writer :credentials
+  class << self
+    credentials = {}
+  end
 
   def resolve_id_field key, klass, subhash=nil
     p = subhash.nil? ? params : params[subhash]
@@ -18,5 +23,11 @@ class ApplicationController < ActionController::Base
   end
   
   def resolve_params
+  end
+  
+  def authenticate_cud_requests
+    authenticate_or_request_with_http_basic('Admin') do |user, pass|
+      user == @@credentials[:user] && pass = @@credentials[:pass]
+    end
   end
 end

@@ -19,7 +19,7 @@ after "deploy:start",   "delayed_job:start"
 after "deploy:restart", "delayed_job:restart"
 #after "deploy:restart", "dlss:log_release"
 
-set :shared_children, %w(log config/database.yml config/notification.yml)
+set :shared_children, %w(log config/database.yml config/notification.yml config/auth.yml)
 
 set :user, "lyberadmin" 
 set :runner, "lyberadmin"
