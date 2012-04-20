@@ -17,7 +17,7 @@ after "deploy:assets:symlink", "rvm:trust_rvmrc"
 after "deploy:stop",    "delayed_job:stop"
 after "deploy:start",   "delayed_job:start"
 after "deploy:restart", "delayed_job:restart"
-#after "deploy:restart", "dlss:log_release"
+after "deploy:restart", "dlss:log_release"
 
 set :shared_children, %w(log config/database.yml config/notification.yml config/auth.yml)
 
