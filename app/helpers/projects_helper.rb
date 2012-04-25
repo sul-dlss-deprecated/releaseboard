@@ -21,7 +21,7 @@ module ProjectsHelper
   end
   
   def render_releases_for project, environment
-    releases = project.releases.select { |r| r.environment == environment }.sort_by(&:released_at).reverse
+    releases = project.releases.select { |r| r.environment == environment }.sort { |a,b| a.model.released_at <=> b.model.released_at }.reverse
     render :partial => 'release_table', :locals => { :project => project, :environment => environment, :releases => releases }
   end
     
