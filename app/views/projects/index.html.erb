@@ -22,7 +22,7 @@
         <div class="three columns">Production</div>
       </div>
       <div>
-      <% @projects.sort_by(&:name).each do |project| %>
+        <% @projects.sort_by { |x| x.name.downcase }.each do |project| %>
         <div class="body row">
           <div class="two columns"><%= link_to project.name, project_path(project.name), :style => 'white-space: nowrap' %></div>
           <div class="one columns"><%= project.kind %></div>
