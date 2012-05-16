@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
   has_many :releases, :dependent => :delete_all
   has_many :notifications, :dependent => :delete_all
   has_many :environments, :through => :releases, :select => 'distinct environments.*'
-  validates :name, :presence => true, :uniqueness => true, :length => { :maximum => 20 }
+  validates :name, :presence => true, :uniqueness => true
 
   after_create :add_default_notification
   
