@@ -8,7 +8,7 @@ require 'delayed/recipes'
 set :stages, %W(dev testing prod)
 set :default_stage, "prod"
 set :bundle_flags, "--quiet"
-set :rvm_ruby_string, "1.8.7@releaseboard"
+set :rvm_ruby_string, "1.9.3"
 set :rvm_type, :system
 
 require 'capistrano/ext/multistage'
@@ -25,7 +25,7 @@ set :user, "lyberadmin"
 set :runner, "lyberadmin"
 set :ssh_options, {:auth_methods => %w(gssapi-with-mic publickey hostbased), :forward_agent => true}
 
-set :destination, "/var/opt/home/lyberadmin"
+set :destination, "/home/lyberadmin"
 set :application, "releaseboard"
 
 set :scm, :git
