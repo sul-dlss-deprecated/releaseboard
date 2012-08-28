@@ -1,3 +1,4 @@
+# encoding: utf-8
 module ProjectsHelper
 
   def find_upstream_release releases, environment
