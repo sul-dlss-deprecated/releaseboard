@@ -1,41 +1,35 @@
-<div class="container">
-  <div class="row">
-    <%= breadcrumbs %>
-    <div class="twelve columns centered">
-      <div class="row">
-        <div class="twelve columns">
-          <div style="float:right; padding-top: 22px">
-            <span class="white radius label">Current</span>
-            <span class="green radius label">Pending Patch</span>
-            <span class="blue  radius label">Pending Minor</span>
-            <span class="red   radius label">Pending Major</span>
-          </div>
-          <h2>DLSS Project Release Board</h2>
-        </div>
-      </div class="row">
-      <div class="tableish">
-      <div class="header row">
-        <div class="two columns">Project</div>
-        <div class="one columns">Type</div>
-        <div class="three columns">Development</div>
-        <div class="three columns">Test</div>
-        <div class="three columns">Production</div>
-      </div>
-      <div>
-        <% @projects.sort_by { |x| x.name.downcase }.each do |project| %>
-        <div class="body row">
-          <div class="two columns"><%= link_to project.name, project_path(project.name), :style => 'white-space: nowrap' %></div>
-          <div class="one columns"><%= project.kind %></div>
-          <% releases = project.latest_releases %>
-          <% ['development','test','production'].each do |env| %>
-            <div class="three columns">
-              <%= release_info(releases, env) %>
-            </div>
-          <% end %>
+<div class="row">
+    <h2 class="span6">DLSS Project Release Board</h2>
+    <div class="pull-right">
+      <span class="span1 label version-current">Current</span>
+      <span class="span1 label version-patch">Patch</span>
+      <span class="span1 label version-minor">Minor</span>
+      <span class="span1 label version-major">Major</span>
+    </div>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Type</th>
+      <th>Versions</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @projects.sort_by { |x| x.name.downcase }.each do |project| %>
+    <tr class="project">
+      <td><%= link_to project.name, project_path(project.name), :style => 'white-space: nowrap' %></div>
+      <td><%= project.kind %></td>
+      <td>
+      
+      <% project.latest_releases.each do |release| %>
+        <div class="span3">
+          <%= release.version_label(project.max_version) %> <%= release.environment.name %>
         </div>
       <% end %>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

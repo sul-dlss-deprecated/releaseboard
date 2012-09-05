@@ -18,4 +18,18 @@ class Project < ActiveRecord::Base
       self.notifications.reject! { |n| n.new_record? }
     end
   end
+
+  def latest_release 
+    @latest_release ||= releases.latest.sort_by { |x| x.version }.last
+  end
+
+  def max_version
+    latest_release.version
+  rescue
+    '0.0.0'
+  end
+
+  def to_param
+    name
+  end
 end

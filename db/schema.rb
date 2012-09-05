@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -30,9 +31,10 @@ ActiveRecord::Schema.define(:version => 20120418230502) do
 
   create_table "environments", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
-    t.integer  "previous_environment_id"
+    t.string   "deployment_host"
+    t.string   "destination"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "notifications", :force => true do |t|
@@ -60,6 +62,10 @@ ActiveRecord::Schema.define(:version => 20120418230502) do
   create_table "releases", :force => true do |t|
     t.integer  "project_id"
     t.integer  "environment_id"
+    t.string   "repository"
+    t.string   "branch"
+    t.string   "sha"
+    t.string   "released_by"
     t.datetime "released_at"
     t.string   "version"
     t.string   "link"

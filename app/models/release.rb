@@ -1,7 +1,7 @@
 class Release < ActiveRecord::Base
   belongs_to :project
   belongs_to :environment
-  attr_accessible :project_id, :environment_id, :version, :released_at, :link, :release_notes
+  attr_accessible :project_id, :environment_id, :version, :released_by, :released_at, :link, :release_notes, :repository, :branch, :sha
   validates :project, :presence => true
   validates :environment, :presence => true
   scope :latest, lambda {
@@ -18,11 +18,17 @@ class Release < ActiveRecord::Base
 
   after_create :send_announcements
   
-  def diff version
+  def diff version, direction = :forward
     cv = self.version.split(/\./)
     nv = version.split(/\./)
     result = nil
-    cv.each_with_index { |v,i| if v != nv[i]; result = i; break; end }
+    op = direction == :forward ? :< : :>
+    cv.each_with_index do |v,i| 
+      if v.to_i.send(op, nv[i].to_i)
+        result = i
+        break
+      end
+    end
     result
   end
   
@@ -34,6 +40,10 @@ class Release < ActiveRecord::Base
     self.project.notifications.where(:environment_id => self.environment.id).each do |notification|
       Announcement.notify(self, notification).deliver
     end
+  end
+
+  def to_param
+    version
   end
   handle_asynchronously :send_announcements
   

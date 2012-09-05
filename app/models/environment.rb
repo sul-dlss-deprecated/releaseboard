@@ -1,5 +1,16 @@
 class Environment < ActiveRecord::Base
-  belongs_to :previous, :class_name => Environment, :foreign_key => :previous_environment_id
   has_many :releases, :dependent => :delete_all
-  attr_accessible :name
+  attr_accessible :name, :deployment_host, :destination
+
+  def name
+    self[:name] || self[:deployment_host]
+  end
+
+  def anchor
+    "#{name.parameterize}Releases"
+  end
+
+  def latest_release
+    Release.where(:environment_id => self.id).latest
+  end
 end

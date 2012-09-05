@@ -1,4 +1,4 @@
-class ProjectDecorator < ApplicationDecorator
+class ProjectDecorator < Draper::Base
   include Draper::LazyHelpers
   
   decorates :project
@@ -9,20 +9,11 @@ class ProjectDecorator < ApplicationDecorator
   end
   
   def maintainer
-    display = model.email.present? ? link_to(model.maintainer, "mailto:#{model.email}") : model.maintainer
-    detail(display, 'Maintainer')
+    model.email.present? ? link_to(model.maintainer, "mailto:#{model.email}") : model.maintainer
   end
-  
-  def email
-    detail(model.email, 'Email')
-  end
-  
+
   def source
-    detail(model.source, 'Source')
-  end
-  
-  def notification_count
-    detail(model.notifications.length.to_s, 'Notifications')
+    model.source
   end
   
   def breadcrumb(current=false, action=:show)

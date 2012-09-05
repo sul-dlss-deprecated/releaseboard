@@ -1,4 +1,4 @@
-class ReleaseDecorator < ApplicationDecorator
+class ReleaseDecorator < Draper::Base
   include Draper::LazyHelpers
 
   decorates :release
@@ -7,20 +7,31 @@ class ReleaseDecorator < ApplicationDecorator
   def self.latest *args
     self.decorate(self.model_class.latest *args)
   end
+
+  def version
+    model.version
+  end
   
-  def version_label previous
-    colors = ['red','blue','green','white']
-    color = colors.last
+  def version_label previous = nil, options = {}
+    colors = ['version-major','version-minor','version-patch']
+
     unless previous.nil?
-      index = model.diff(previous.version)
+      index = model.diff(previous, options.fetch(:direction, :forward))
       color = colors[index] unless index.nil?
     end
-    
-    link content_tag(:span, {:class => "#{color} radius label"}) { model.version }
+
+    color = 'version-current' if project.max_version == model.version
+
+    if options.fetch(:link, 'false')
+      link_to(model.version, project_release_path(model.project, model), :class => "label #{color}")
+    else
+      content_tag :span, model.version, :class => "label #{color}"
+    end
   end
 
   def short_note
     notes = model.release_notes
+    notes ||= "from #{self.repository}##{self.branch}" if self.repository or self.branch
     if notes.present?
       result = notes.lines.first.chomp.truncate(100)
       if notes.lines.to_a.length > 1 and result !~ /\.\.\.$/
@@ -36,19 +47,15 @@ class ReleaseDecorator < ApplicationDecorator
     str = model.released_at.localtime.strftime(fmt).downcase
     str = link(str) if opts[:link]
     case opts[:words]
-    when false, nil then str
+    when false, nil then model.released_at
     when :first then "#{time_ago_in_words(model.released_at)} ago (#{str})".html_safe
     else "#{str} (#{time_ago_in_words(model.released_at)} ago)".html_safe
     end
   end
   
-  def breadcrumb(current=false)
-    { :content => "#{model.version}-#{model.environment.name}", :href => project_release_path(model) }
-  end
-  
   private
   def link(content)
-    link_to(content, project_release_path(model.project.name, model))
+    link_to(content, project_release_path(model.project, model))
   end
   
 end

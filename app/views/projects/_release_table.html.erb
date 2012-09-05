@@ -1,14 +1,20 @@
-<div class="tableish">
-  <div class="header row">
-    <div class="one columns">Version</div>
-    <div class="four columns">Released</div>
-    <div class="seven columns">Notes</div>
-  </div>
+<table class="table striped-table">
+  <thead>
+    <tr>
+    <th>Version</th>
+    <th>Released</th>
+    <th>Released By</th>
+    <th>Notes</th>
+  </tr>
+  </thead>
+  <tbody>
   <% releases.each_with_index do |release,index| %>
-    <div class="body row">
-      <div class="one column"><%= release.version_label(releases[index+1]) %></div>
-      <div class="four columns"><%= release.released_at(:words => true) %></div>
-      <div class="seven columns"><%= release.short_note %></div>
-    </div>
+    <tr>
+      <td><%= release.version_label((releases[index+1].try(:version) || '0.0.0'), :direction => :backward) %></td>
+      <td><%= l release.released_at, :format => :short %> (<%= distance_of_time_in_words_to_now(release.released_at) %> ago)</td>
+      <td><%= release.released_by %></td>
+      <td><%= release.short_note %></td>
+    </tr>
   <% end %>
-</div>
+  </tbody>
+</table>

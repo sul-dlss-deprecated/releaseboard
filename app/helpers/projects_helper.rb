@@ -14,10 +14,8 @@ module ProjectsHelper
   
   def release_info releases, env
     release = releases[env]
-    if release.nil?
-      '—'
-    else
-      "#{releases[env].version_label(find_upstream_release(releases, env))} #{releases[env].released_at}".html_safe
+    unless release.nil?
+      "#{releases[env].version_label(find_upstream_release(releases, env))} #{env}".html_safe
     end
   end
   

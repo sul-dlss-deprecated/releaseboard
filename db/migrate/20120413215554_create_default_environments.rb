@@ -4,9 +4,9 @@ class CreateDefaultEnvironments < ActiveRecord::Migration
       say 'development'
       dev  = Environment.find_or_create_by_name('development')
       say 'test'
-      test = Environment.find_or_create_by_name('test')        { |e| e.update_attribute :previous, dev  }
+      test = Environment.find_or_create_by_name('test')
       say 'production'
-      prod = Environment.find_or_create_by_name('production')  { |e| e.update_attribute :previous, test }
+      prod = Environment.find_or_create_by_name('production')
     end
   end
 end

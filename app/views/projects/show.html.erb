@@ -1,50 +1,37 @@
 <% environments = @project.environments.uniq %>
-<div class="container">
-  <div class="row">
-    <%= breadcrumbs(@project.breadcrumb(true), @project.breadcrumb(false,:edit)) %>
-    <div class="twelve columns centered">
-      <h2><%= @project.name %></h2>
-      <%= content_tag_present :p, @project.description %>
-      <div class="row">
-        <%= @project.maintainer %>
-        <%= @project.source %>
-        <%= @project.notification_count %>
-      </div>
-      <hr/>
-      <div class="row">
-        <div class="twelve columns">
-          <h4>Release History</h4>
-        </div>
-      </div>
-      <% if environments.any? %>
-        <div class="row">
-          <div class="row" style="margin-top: 8px">
-            <div style="float:right">
-              <span class="white radius label">Current</span>
-              <span class="green radius label">Patch Release</span>
-              <span class="blue  radius label">Minor Release</span>
-              <span class="red   radius label">Major Release</span>
-            </div>
-            <dl class="tabbish sub-nav">
-              <dt>Environment:</dt>
-              <% environments.each_with_index do |env,index| %>
-                <dd class="<%='active' if index == 0%>">
-                  <%= link_to env.name.titleize, "##{env.name}Releases" %>
-                </dd>
-              <% end %>
-            </dl>
-          </div>
-          <ul class="tabs-content">
-            <% environments.each_with_index do |env,index| %>
-              <li id="<%=env.name%>Releases" class="<%='active' if index == 0%>">
-                <%= render_releases_for @project, env %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      <% else %>
-        <p>This project has not logged any releases.</p>
-      <% end %>
-    </div>
+<h2><%= @project.name %> <%= ReleaseDecorator.new(@project.latest_release).version_label(@project.max_version, :link => false) %></h2>
+<%= content_tag :p, @project.description if @project.description.present? %>
+
+<hr/>
+
+<% if environments.any? %>
+  <div class="pull-right">
+    <span class="span1 label version-patch">Patch</span>
+    <span class="span1 label version-minor">Minor</span>
+    <span class="span1 label version-major">Major</span>
   </div>
-</div>
+
+  <h3>Release History</h3>
+  <ul class="row nav nav-tabs">
+    <% environments.each_with_index do |env,index| %>
+      <li class="<%= 'active' if index == 0 %>">
+      <%= link_to "#{h env.name}".html_safe, "##{env.anchor}", :'data-toggle' => 'tab' %>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+  <% environments.each_with_index do |env,index| %>
+    <div class="tab-pane <%= 'active' if index == 0 %>" id="<%=env.anchor %>">
+      <dl>
+        <% if env.destination %>
+        <dt>Deployed to: </dt><dd><%= env.deployment_host %>:<%= env.destination %></dd>
+        <% end %>
+      </dl>
+       <%= render_releases_for @project, env %>
+    </div>
+  <% end %>
+  </div>
+<% else %>
+  <p>This project has not logged any releases.</p>
+<% end %>

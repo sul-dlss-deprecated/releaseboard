@@ -1,16 +1,12 @@
-<div class="container">
-  <div class="row">
-    <%= breadcrumbs @release.project.breadcrumb, @release.breadcrumb %>
-    <div class="twelve columns centered">
-      <h2><%= @release.project.name %></h2>
-      <p>Version <%= @release.version_label(nil) %> released to <span class="white radius label"><%= @release.environment.name %></span> <%= @release.released_at(:link=>false, :words=>:first) %></p>
+<h2><%= @project.name %> <%= @releases.first.version_label(nil) %></h2>
 
-      <% if @release.release_notes.present? %>
-        <h3>Release Notes</h3>
-        <div class="panel">
-          <%= content_tag :pre, @release.release_notes.to_s, :class => 'notes' %>
-        </div>
-      <% end %>
-    </div>
+<% @releases.each do |release| %>
+  <p>released to <%= link_to release.environment.name, polymorphic_path(release.project, :anchor => release.environment.anchor), :class => 'label' %> <%= l release.released_at, :format => :short %> (<%= distance_of_time_in_words_to_now(release.released_at) %> ago)</p>
+<% end %>
+
+<% if @releases.any? { |x| x.release_notes.present? } %>
+  <h3>Release Notes</h3>
+  <div class="panel">
+    <%= content_tag :pre, @releases.map { |x| x.release_notes }.compact.uniq.to_s, :class => 'notes' %>
   </div>
-</div>
+<% end %>
