@@ -8,7 +8,15 @@ class Project < ActiveRecord::Base
   after_create :add_default_notification
   
   def latest_releases
-    releases.latest.also_index_by(:environment_name)
+    source = releases.latest
+
+    dev = source.select { |x| x.environment.name =~ /dev/ }
+    test = source.select { |x| x.environment.name =~ /test/ }
+    prod = source.select { |x| x.environment.name =~ /prod/ }
+
+    leftover = source - dev - test - prod
+
+    [dev,test,prod,leftover].flatten
   end
   
   def add_default_notification
