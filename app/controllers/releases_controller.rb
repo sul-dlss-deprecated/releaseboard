@@ -15,12 +15,16 @@ class ReleasesController < ApplicationController
   def create
     @project = Project.find_or_create_by_name(params[:project_id])
 
-    if params[:environment].is_a? String
-      @environment = Environment.find_by_name(params[:environment])
-    else
+    if params[:release][:environment].is_a? String
+      @environment = Environment.find_by_name(params[:release][:environment])
+    end
+
+    if params[:release][:environment].is_a? Hash
       @environment = Environment.find_or_initialize_by_deployment_host_and_destination(params[:environment][:deployment_host], params[:environment][:destination])
       @environment.update_attributes(params[:environment])
     end
+
+    params[:release].delete(:environment)
 
     @release = Release.new(params[:release])
     @release.project = @project
