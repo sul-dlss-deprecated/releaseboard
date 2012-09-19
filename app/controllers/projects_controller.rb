@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = ProjectDecorator.all
+    @releases = ReleaseDecorator.recent
 
     respond_to do |format|
       format.html # index.html.erb

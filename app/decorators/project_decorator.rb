@@ -15,7 +15,7 @@ class ProjectDecorator < Draper::Base
   def source
     model.source
   end
-  
+
   def breadcrumb(current=false, action=:show)
     if action == :edit
       { :content => 'Edit', :href => edit_project_path(model.name), :current => current }

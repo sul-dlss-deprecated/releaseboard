@@ -11,3 +11,4 @@ en:
   time:
     formats:
       short: "%a, %b %d %H:%M"
+      time: "%H:%M"

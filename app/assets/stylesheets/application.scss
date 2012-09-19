@@ -27,9 +27,14 @@ body {
 }
 
 .version-patch {
-  @extend .label;
+  @extend .label-success;
 }
 
 .version-current {
-  @extend .label-inverse;
+  @extend .label-info;
+}
+
+.recent-releases {
+@extend .well;
+	ul, li { list-style: none; margin-left: 0; padding-left: 0;}
 }

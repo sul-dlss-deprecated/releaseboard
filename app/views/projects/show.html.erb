@@ -15,7 +15,7 @@
   <ul class="row nav nav-tabs">
     <% environments.each_with_index do |env,index| %>
       <li class="<%= 'active' if index == 0 %>">
-      <%= link_to "#{h env.name}".html_safe, "##{env.anchor}", :'data-toggle' => 'tab' %>
+      <%= link_to "#{h env.name} (#{@project.latest_release_for_environment(env).version})".html_safe, "##{env.anchor}", :'data-toggle' => 'tab' %>
       </li>
     <% end %>
   </ul>

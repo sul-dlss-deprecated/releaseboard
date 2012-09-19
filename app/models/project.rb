@@ -18,6 +18,10 @@ class Project < ActiveRecord::Base
 
     [dev,test,prod,leftover].flatten
   end
+
+  def latest_release_for_environment environment
+    latest_releases.select { |x| x.environment.id == environment.id }.first
+  end
   
   def add_default_notification
     env = Environment.find_by_name('production')

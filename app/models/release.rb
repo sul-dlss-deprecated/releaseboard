@@ -11,6 +11,10 @@ class Release < ActiveRecord::Base
     rt = self.arel_table
     where(:id => rt.project(rt[:id].maximum).group(rt[:project_id], rt[:environment_id]))
   }
+
+  scope :recent, lambda {
+    where("released_at > ?", (Time.now - 7.days)).includes(:project, :environment).reverse_order
+  }
   
   before_validation(:on => :create) do
     self.released_at ||= Time.now
@@ -40,6 +44,12 @@ class Release < ActiveRecord::Base
     self.project.notifications.where(:environment_id => self.environment.id).each do |notification|
       Announcement.notify(self, notification).deliver
     end
+  end
+
+  def previous
+    other_releases = project.releases.where(:environment_id => self.environment.id)
+    idx = other_releases.index { |x| x.id == self.id }
+    other_releases[idx - 1] || self
   end
 
   def to_param
