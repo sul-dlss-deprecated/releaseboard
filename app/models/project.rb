@@ -8,15 +8,7 @@ class Project < ActiveRecord::Base
   after_create :add_default_notification
   
   def latest_releases
-    source = releases.latest
-
-    dev = source.select { |x| x.environment.name =~ /dev/ }
-    test = source.select { |x| x.environment.name =~ /test/ }
-    prod = source.select { |x| x.environment.name =~ /prod/ }
-
-    leftover = source - dev - test - prod
-
-    [dev,test,prod,leftover].flatten
+    releases.latest.sort_by { |x| x.environment.ordering_index }
   end
 
   def latest_release_for_environment environment

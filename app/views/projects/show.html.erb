@@ -1,4 +1,4 @@
-<% environments = @project.environments.uniq %>
+<% environments = @project.environments.uniq.sort_by { |env| env.ordering_index } %>
 <h2><%= @project.name %> <%= ReleaseDecorator.new(@project.latest_release).version_label(@project.max_version, :link => false) %></h2>
 <%= content_tag :p, @project.description if @project.description.present? %>
 

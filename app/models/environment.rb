@@ -13,4 +13,17 @@ class Environment < ActiveRecord::Base
   def latest_release
     Release.where(:environment_id => self.id).latest
   end
+
+  def ordering_index
+    case name
+      when /dev/
+        "2-#{name}"
+      when /test/
+        "1-#{name}"
+      when /prod/
+        "0-#{name}"
+      else
+        name
+    end  
+  end
 end
