@@ -5,6 +5,6 @@ Releaseboard::Application.routes.draw do
 
 
   resources :projects do
-    resources :releases, :constraints => {:id => /[\w.]+?/, :format => /html|csv/}
+    resources :releases, :constraints => {:id => /[\w\-.]+?/, :format => /html|csv/}
   end
 end
