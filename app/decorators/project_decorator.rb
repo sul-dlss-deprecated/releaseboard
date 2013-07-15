@@ -6,7 +6,7 @@ class ProjectDecorator < Draper::Decorator
   decorates_association :releases
   
   def latest_releases
-    ReleaseDecorator.decorate(model.latest_releases).to_ary.also_index_by(:environment_name)
+    ReleaseDecorator.decorate_collection(model.latest_releases).to_ary.also_index_by(:environment_name)
   end
   
   def maintainer
