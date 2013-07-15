@@ -1,12 +1,11 @@
 source "http://rubygems.org"
-source "http://sulair-rails-dev.stanford.edu"
-gem 'delayed_job_active_record'
+source "http://sul-gems.stanford.edu"
 
 group :deployment do
   gem 'capistrano'
   gem 'capistrano-ext'
   gem 'rvm-capistrano'
-  gem 'lyberteam-devel', '>=0.7.0'
-  gem 'lyberteam-capistrano-devel', '>=0.9.1'
-  gem 'net-ssh-kerberos'
+  gem 'lyberteam-capistrano-devel', '>=1.2.0'
+  gem 'net-ssh-krb'
+  gem 'gssapi' #, :git => 'git@github.com:cbeer/gssapi.git'
 end
