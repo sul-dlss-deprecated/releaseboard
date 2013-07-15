@@ -1,6 +1,9 @@
 class ReleaseDecorator < Draper::Decorator
   include Draper::LazyHelpers
 
+delegate_all
+
+  decorates_finders
   decorates :release
   decorates_association :project
 

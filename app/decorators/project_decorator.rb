@@ -1,6 +1,7 @@
 class ProjectDecorator < Draper::Decorator
   include Draper::LazyHelpers
-  
+  delegate_all
+  decorates_finders
   decorates :project
   decorates_association :releases
   
