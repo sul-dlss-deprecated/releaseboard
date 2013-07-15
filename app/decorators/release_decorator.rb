@@ -1,4 +1,4 @@
-class ReleaseDecorator < Draper::Base
+class ReleaseDecorator < Draper::Decorator
   include Draper::LazyHelpers
 
   decorates :release

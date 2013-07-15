@@ -4,7 +4,7 @@ class ReleasesController < ApplicationController
   # GET /projects/:project_id/releases/1
   def show
     @project = Project.find_by_name(params[:project_id])
-    @releases = ReleaseDecorator.find_all_by_project_id_and_version(@project, params[:id])
+    @releases = Release.find_all_by_project_id_and_version(@project, params[:id]).decorate
 
     respond_to do |format|
       format.html # show.html.erb

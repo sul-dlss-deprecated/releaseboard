@@ -1,4 +1,4 @@
-class ProjectDecorator < Draper::Base
+class ProjectDecorator < Draper::Decorator
   include Draper::LazyHelpers
   
   decorates :project
