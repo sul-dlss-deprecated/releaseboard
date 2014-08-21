@@ -1,51 +1,49 @@
-require "rvm/capistrano"                               # Load RVM's capistrano plugin.
-require 'net/ssh/kerberos'
-require 'bundler/setup'
-require 'bundler/capistrano'
-require 'dlss/capistrano'
-require 'delayed/recipes'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :stages, %W(dev testing prod)
-set :default_stage, "prod"
-set :bundle_flags, "--quiet"
-set :rvm_ruby_string, "1.9.3"
-set :rvm_type, :system
+set :application, 'frda'
+set :repo_url, 'https://github.com/sul-dlss/releaseboard.git'
 
-require 'capistrano/ext/multistage'
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-after "deploy:assets:symlink", "rvm:trust_rvmrc"
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
-after "deploy:restart", "dlss:log_release"
+# Default deploy_to directory is /var/www/my_app
+set :deploy_to, '/home/lyberadmin/releaseboard'
 
-set :shared_children, %w(log config/database.yml config/notification.yml config/auth.yml)
+# Default value for :scm is :git
+# set :scm, :git
 
-set :user, "lyberadmin" 
-set :runner, "lyberadmin"
-set :ssh_options, {:auth_methods => %w(gssapi-with-mic publickey hostbased), :forward_agent => true}
+# Default value for :format is :pretty
+# set :format, :pretty
 
-set :destination, "/home/lyberadmin"
-set :application, "releaseboard"
+# Default value for :log_level is :debug
+# set :log_level, :debug
 
-set :scm, :git
-set :copy_cache, true
-set :copy_exclude, [".git"]
-set :use_sudo, false
-set :keep_releases, 10
+# Default value for :pty is false
+# set :pty, true
 
-set :deploy_to, "#{destination}/#{application}"
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml config/auth.yml config/notification.yml}
 
-namespace :rvm do
-  task :trust_rvmrc do
-    run "/usr/local/rvm/bin/rvm rvmrc trust #{latest_release}"
-  end
-end
+# Default value for linked_dirs is []
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+# set :keep_releases, 5
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "touch #{File.join(current_path,'tmp','restart.txt')}"
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
+
+  after :publishing, :restart
+
 end
