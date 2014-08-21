@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-source "http://sul-gems.stanford.edu"
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.19'
 gem 'rake'
 
 gem 'mysql2'
@@ -20,13 +19,8 @@ gem 'draper'
 gem 'delayed_job_active_record'
 gem 'daemons'
 
-group :deployment do
+group :development do
   gem 'sqlite3'
-  gem 'capistrano'
-  gem 'capistrano-ext'
-  gem 'rvm-capistrano'
-  gem 'lyberteam-capistrano-devel', '>=1.2.0'
-  gem 'net-ssh-krb'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'capybara'
@@ -34,4 +28,10 @@ group :deployment do
   gem 'rcov', :platform => :mri_18
   gem 'simplecov', :platform => :mri_19
   gem 'simplecov-rcov', :platform => :mri_19
+end
+
+group :deployment do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rails'
+  gem 'lyberteam-capistrano-devel'
 end
