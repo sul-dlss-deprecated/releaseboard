@@ -24,6 +24,7 @@ delegate_all
     end
 
     color = 'version-current' if project.max_version == model.version
+    color ||= 'label-default'
 
     if !!options[:link] 
       link_to(model.version, project_release_path(model.project, model), :class => "label #{color}")

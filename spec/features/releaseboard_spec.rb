@@ -54,22 +54,22 @@ describe "the project page" do
 
   it "should have projects" do
     visit '/'
-    page.should have_selector '.project'
-    page.should have_content 'project_a'
+    expect(page).to have_selector '.project'
+    expect(page).to have_content 'project_a'
   end
 
   it "should have a project display" do
     visit '/projects/project_a'
-    page.should have_content "project_a 1.0.0"
-    page.should have_content "dev.example.com"
-    page.should have_content "test.example.com"
-    page.should have_content "example.com"
+    expect(page).to have_content "project_a 1.0.0"
+    expect(page).to have_content "dev.example.com"
+    expect(page).to have_content "test.example.com"
+    expect(page).to have_content "example.com"
   end
 
   it "should have a release display" do
     visit "/projects/project_a/releases/0.0.1"
-    page.should have_content "released to dev.example.com"
-    page.should have_content "released to test.example.com"
-    page.should have_content "released to example.com"
+    expect(page).to have_content "released to dev.example.com"
+    expect(page).to have_content "released to test.example.com"
+    expect(page).to have_content "released to example.com"
   end
 end

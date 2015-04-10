@@ -1,11 +1,11 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container-fluid">
-      <%= link_to 'releaseboard', root_url, :class => 'brand' %>
+<div class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <%= link_to 'releaseboard', root_url, :class => 'navbar-brand' %>
 
-    <ul class="nav">
-      <%= content_for(:nav) %>
-    </ul>
-  </div>
+      <ul class="nav navbar-nav">
+        <%= content_for(:nav) %>
+      </ul>
+    </div>
   </div>
 </div>

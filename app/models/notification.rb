@@ -3,7 +3,7 @@ require 'ostruct'
 class Notification < ActiveRecord::Base
   belongs_to :project
   belongs_to :environment
-  attr_accessible :project_id, :environment_id, :from, :to, :subject, :template
+
   validates :project,     :presence => true
   validates :environment, :presence => true
   validates :from,        :presence => true

@@ -1,15 +1,15 @@
 <div class="row">
-    <h2 class="span6">DLSS Project Release Board</h2>
+    <h2 class="col-md-6">DLSS Project Release Board</h2>
     <div class="pull-right">
-      <span class="span1 label version-current">Current</span>
-      <span class="span1 label version-patch">Patch</span>
-      <span class="span1 label version-minor">Minor</span>
-      <span class="span1 label version-major">Major</span>
+      <span class="label version-current">Current</span>
+      <span class="label version-patch">Patch</span>
+      <span class="label version-minor">Minor</span>
+      <span class="label version-major">Major</span>
     </div>
 </div>
 
 <div class="row">
-  <div class="span6">
+  <div class="col-md-6">
     <div class="recent-releases">
      <h3>Recent Releases</h3>
     <% @releases.group_by { |x| x.released_at.to_date }.each do |date, releases| %>
@@ -17,14 +17,14 @@
      <ul>
     <% releases.each do |release| %>
       <li>
-        <%= l release.released_at, :format => :time %> <%= link_to release.project.name, project_path(release.project.name) %> <%= ReleaseDecorator.new(release).version_label(release.previous.version, :direction => :backward ) %> released to <%= release.environment.name %> 
+        <%= l release.released_at, :format => :time %> <%= ReleaseDecorator.new(release).version_label(release.previous.version, :direction => :backward ) %> <%= link_to release.project.name, project_path(release.project.name) %> released to <%= release.environment.name %> 
       </li>
       <% end %>
   </ul>
     <% end %>
 </div>
   </div>
-  <div class="span6">
+  <div class="col-md-6">
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -39,7 +39,7 @@
       <td>
       
       <% project.latest_releases.each do |release| %>
-        <div class="span3">
+        <div class="col-md-6">
           <%= release.version_label(project.max_version) %> <%= release.environment.name %>
         </div>
       <% end %>

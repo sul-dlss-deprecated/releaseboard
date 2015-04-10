@@ -1,8 +1,7 @@
 class Project < ActiveRecord::Base
-  attr_accessible :name, :kind, :description, :maintainer, :email, :source
   has_many :releases, :dependent => :delete_all
   has_many :notifications, :dependent => :delete_all
-  has_many :environments, :through => :releases, :select => 'distinct environments.*'
+  has_many :environments, -> { uniq }, :through => :releases
   validates :name, :presence => true, :uniqueness => true
 
   after_create :add_default_notification
@@ -19,7 +18,6 @@ class Project < ActiveRecord::Base
     env = Environment.find_by_name('production')
     unless env.nil?
       self.notifications.create :environment_id => env.id
-      self.notifications.reject! { |n| n.new_record? }
     end
   end
 

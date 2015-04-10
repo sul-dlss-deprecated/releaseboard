@@ -14,14 +14,13 @@ describe ReleasesController do
                          :version => '0.0.1'
                       }
 
-        Project.find_by_name('project_name').releases.length.should == 1
-
+        expect(Project.find_by(name: 'project_name').releases.length).to eq 1
       end
     end
 
     context "old-style" do
       it "should work with the old-style" do
-        prod = Environment.find_by_name('production')
+        prod = Environment.find_or_create_by(name: 'production')
 
         post :create, :project_id => 'old_style_project',
                       :environment => 'production',
@@ -29,7 +28,7 @@ describe ReleasesController do
                         :version => '0.0.2'
                       }
 
-        Release.last.environment.should == prod
+        expect(Release.last.environment).to eq prod
       end
     end
   end

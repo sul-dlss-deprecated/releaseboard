@@ -19,18 +19,22 @@ body {
 }
 
 .version-major {
-  @extend .label-important;
+  @extend .label;
+  @extend .label-danger;
 }
 
 .version-minor {
+  @extend .label;
   @extend .label-warning;
 }
 
 .version-patch {
+  @extend .label;
   @extend .label-success;
 }
 
 .version-current {
+  @extend .label;
   @extend .label-info;
 }
 
