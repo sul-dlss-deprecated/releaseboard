@@ -23,8 +23,8 @@ class Release < ActiveRecord::Base
   after_create :send_announcements
   
   def diff version, direction = :forward
-    cv = self.version.split(/\./)
-    nv = version.split(/\./)
+    cv = (self.version || "").split(/\./)
+    nv = (version || "").split(/\./)
     result = nil
     op = direction == :forward ? :< : :>
     cv.each_with_index do |v,i| 

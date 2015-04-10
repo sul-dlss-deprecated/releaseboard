@@ -25,7 +25,7 @@ delegate_all
 
     color = 'version-current' if project.max_version == model.version
 
-    if options.fetch(:link, 'false')
+    if !!options[:link] 
       link_to(model.version, project_release_path(model.project, model), :class => "label #{color}")
     else
       content_tag :span, model.version, :class => "label #{color}"
@@ -58,7 +58,11 @@ delegate_all
   
   private
   def link(content)
-    link_to(content, project_release_path(model.project, model))
+    if model.version.blank?
+      content
+    else
+      link_to(content, project_release_path(model.project, model))
+    end
   end
   
 end
