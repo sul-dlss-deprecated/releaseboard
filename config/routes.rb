@@ -3,6 +3,7 @@ Releaseboard::Application.routes.draw do
   # first created -> highest priority.
   root :to => 'projects#index'
 
+  get '/login' => 'application#login'
 
   resources :projects do
     resources :releases, :constraints => {:id => /[\w\-.]+?/, :format => /html|csv/}

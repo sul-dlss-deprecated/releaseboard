@@ -1,5 +1,6 @@
 class ReleasesController < ApplicationController
   skip_before_filter :verify_authenticity_token
+  before_filter :require_user!, except: [:create]
 
   # GET /projects/:project_id/releases/1
   def show
