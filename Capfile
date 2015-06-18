@@ -23,6 +23,7 @@ require 'capistrano/deploy'
 
 require 'capistrano/bundler'
 require 'capistrano/rails'
+ENV['RELEASE_BOARD_URL'] ||= "http://dlss-releases-prod.stanford.edu"
 require 'dlss/capistrano'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
