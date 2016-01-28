@@ -1,0 +1,26 @@
+---
+:development:
+  :defaults:
+    :to: dlss-developers@example.com
+    :from: dlss-developers@example.com
+    :template: "#{project} v#{version} has been released to #{environment}."
+    :subject: "#{project} v#{version} has been released to #{environment}."
+  :smtp_settings: 
+    :authentication: :plain
+    :port: "587"
+    :domain: localhost.localdomain
+    :address: smtp.example.com
+    :enable_starttls_auto: true
+
+:test:
+  :defaults:
+    :to: dlss-developers@example.com
+    :from: dlss-developers@example.com
+    :template: "#{project} v#{version} has been released to #{environment}."
+    :subject: "#{project} v#{version} has been released to #{environment}."
+  :smtp_settings: 
+    :authentication: :plain
+    :port: "587"
+    :domain: localhost.localdomain
+    :address: smtp.example.com
+    :enable_starttls_auto: true

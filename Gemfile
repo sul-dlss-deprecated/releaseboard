@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.2'
+gem 'rails', '4.2.5.1'
 # Use sqlite3 as the database (during local development)
 gem 'sqlite3'
 # Use mysql as the database when running on the server environment
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.10'
 # Use sass-powered bootstrap
-gem 'bootstrap-sass', "~> 3.3.4"
+gem 'bootstrap-sass', "~> 3.3"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -29,8 +29,6 @@ gem 'cancancan', '~> 1.10'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'rake'
-
-gem 'mysql2'
 gem 'json'
 
 gem 'draper'
@@ -39,18 +37,16 @@ gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'test-unit'
 
-group :development do
-  gem 'sqlite3'
+group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
-  gem 'simplecov', platform: :mri_19
+  gem 'simplecov'
 end
 
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel'
+  gem 'dlss-capistrano'
 end

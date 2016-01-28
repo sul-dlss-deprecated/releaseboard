@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 describe ReleasesController do
   describe "post" do
     context "new-style" do
