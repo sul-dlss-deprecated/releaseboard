@@ -13,7 +13,5 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-config/notification.yml
 .powenv
 public/assets
-config/auth.yml
