@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5.1'
+gem 'rails', '4.2.5.2'
 # Use sqlite3 as the database (during local development)
 gem 'sqlite3'
 # Use mysql as the database when running on the server environment
@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 # JS Runtime. See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer'
 # A gem for simple rails invornment specific config
-gem 'rails_config'
+gem 'config'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -35,9 +35,9 @@ gem 'draper'
 
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'test-unit'
 
 group :development, :test do
+  gem 'test-unit'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'capybara'
